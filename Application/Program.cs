@@ -11,6 +11,10 @@ namespace Application
 {
     public class Program
     {
+        /// <summary>
+        /// 启动方法，本项目在github地址：https://github.com/hejianjun5811/ModelWebApp.git 
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

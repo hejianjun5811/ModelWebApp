@@ -15,7 +15,7 @@ using Microsoft.OpenApi.Models;
 namespace Application
 {
     public class Startup
-    {
+    { 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
