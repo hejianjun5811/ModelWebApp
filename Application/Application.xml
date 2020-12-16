@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Application</name>
+    </assembly>
+    <members>
+        <member name="T:Application.Controllers.WeatherForecastController">
+            <summary>
+            天气控制器
+            </summary>
+        </member>
+        <member name="M:Application.Controllers.WeatherForecastController.#ctor(Microsoft.Extensions.Logging.ILogger{Application.Controllers.WeatherForecastController})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:Application.Controllers.WeatherForecastController.Get">
+            <summary>
+            获取天气信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Application.Controllers.WeatherForecastController.Post(MyWebApp.Model.Love)">
+            <summary>
+            不想显示某些接口,[ApiExplorerSettings(IgnoreApi = true)]或者直接对这个方法 private，也可以直接使用obsolete属性
+            </summary>
+            <param name="love">model实体类参数</param> 
+        </member>
+    </members>
+</doc>
