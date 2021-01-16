@@ -22,10 +22,10 @@ namespace Application.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-       /// <summary>
-       /// 构造函数
-       /// </summary>
-       /// <param name="logger"></param>
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="logger"></param>
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
@@ -35,7 +35,7 @@ namespace Application.Controllers
         /// 获取天气信息
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("Get")]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
@@ -52,9 +52,42 @@ namespace Application.Controllers
         /// 不想显示某些接口,[ApiExplorerSettings(IgnoreApi = true)]或者直接对这个方法 private，也可以直接使用obsolete属性
         /// </summary>
         /// <param name="love">model实体类参数</param> 
-        [HttpPost]
+        [HttpPost("Post")]
         public void Post(Love love)
         {
+        }
+
+
+        /// <summary>
+        /// 获取爱
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetLoves")]
+        public List<Love> GetLoves()
+        {
+            var loveList = new List<Love>();
+            loveList.Add(new Love()
+            {
+                Id = 1,
+                Age = 29,
+                Name = "hjj",
+            });
+
+            loveList.Add(new Love()
+            {
+                Id = 2,
+                Age = 29,
+                Name = "lym",
+            });
+
+            loveList.Add(new Love()
+            {
+                Id = 3,
+                Age = 3,
+                Name = "hyk",
+            });
+
+            return loveList;
         }
     }
 }

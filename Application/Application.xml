@@ -27,5 +27,17 @@
             </summary>
             <param name="love">model实体类参数</param> 
         </member>
+        <member name="M:Application.Controllers.WeatherForecastController.GetLoves">
+            <summary>
+            获取爱
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Application.Program.Main(System.String[])">
+            <summary>
+            启动方法，本项目在github地址：https://github.com/hejianjun5811/ModelWebApp.git 
+            </summary>
+            <param name="args"></param>
+        </member>
     </members>
 </doc>
