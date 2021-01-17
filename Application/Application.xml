@@ -33,6 +33,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Application.Controllers.WeatherForecastController.GetWinningNumbers">
+            <summary>
+            获取抽奖结果记录
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Application.Program.Main(System.String[])">
             <summary>
             启动方法，本项目在github地址：https://github.com/hejianjun5811/ModelWebApp.git 

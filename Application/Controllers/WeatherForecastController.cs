@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyWebApp.Model;
+using Newtonsoft.Json;
 
 namespace Application.Controllers
 {
@@ -21,14 +23,20 @@ namespace Application.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private static readonly HttpClient _httpClient = new HttpClient();
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="logger"></param>
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(
+            ILogger<WeatherForecastController> logger
+            //, IHttpClientFactory httpClientFactory
+            )
         {
             _logger = logger;
+            //_httpClientFactory = httpClientFactory;
         }
 
         /// <summary>
@@ -88,6 +96,54 @@ namespace Application.Controllers
             });
 
             return loveList;
+        }
+
+        /// <summary>
+        /// 获取抽奖结果记录
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetWinningNumbers")]
+        public List<WinNumsDto> GetWinningNumbers()
+        {
+          
+            var winNumList = new List<WinNumsDto>();
+
+            for(int pageInt = 1; pageInt <= 70; pageInt++)
+            {
+                var url = $"https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry?gameNo=85&provinceId=0&pageSize=30&isVerify=1&pageNo={pageInt}";
+                HttpResponseMessage response = _httpClient.GetAsync(url).GetAwaiter().GetResult();
+                response.EnsureSuccessStatusCode();
+                string responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                var rt = JsonConvert.DeserializeObject<WinningNumber>(responseBody);
+
+                if (rt.success)
+                {
+                    if (rt.value != null && rt.value.list != null && rt.value.list.Count > 0)
+                    {
+                        var resultList = rt.value.list;
+                        foreach (var item in resultList)
+                        {
+                            var winValList = item.lotteryDrawResult.Split(' ');
+                            winNumList.Add(new WinNumsDto()
+                            {
+                                OneNum = Int32.Parse(winValList[0]),
+                                TwoNum = Int32.Parse(winValList[1]),
+                                ThreeNum = Int32.Parse(winValList[2]),
+                                FourNum = Int32.Parse(winValList[3]),
+                                FiveNum = Int32.Parse(winValList[4]),
+                                SixNum = Int32.Parse(winValList[5]),
+                                SevenNum = Int32.Parse(winValList[6]),
+                            });
+                        }
+                    }
+                }
+            }
+          
+            //var clent = _httpClientFactory.CreateClient();
+
+            //var httpResult =  clent.GetAsync("https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry?gameNo=85&provinceId=0&pageSize=30&isVerify=1&pageNo=70");
+
+            return winNumList;
         }
     }
 }
